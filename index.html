@@ -47,18 +47,16 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     
-    <!-- Critical CSS - Inline essential styles -->
+    <!-- Load essential CSS synchronously for better performance -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Critical CSS for instant loading -->
     <style>
-        :root{--primary:#5d4037;--secondary:#e28f64;--accent:#ffab91;--light-bg:#faf9f7;--cream:#f5f5f0;--dark:#2c1810;--text:#4a4a4a}*{scroll-behavior:smooth}body{font-family:system-ui,-apple-system,sans-serif;background-color:var(--light-bg);color:var(--text)}h1,h2,h3{color:var(--dark)}.hero-section{min-height:90vh;background:linear-gradient(135deg,var(--light-bg) 0%,var(--cream) 100%)}.loading-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--light-bg);display:flex;justify-content:center;align-items:center;z-index:9999;transition:opacity .3s ease-out}
+        :root{--primary:#5d4037;--secondary:#e28f64;--accent:#ffab91;--light-bg:#faf9f7;--cream:#f5f5f0;--dark:#2c1810;--text:#4a4a4a}*{scroll-behavior:smooth}body{font-family:'Inter',system-ui,-apple-system,sans-serif;background-color:var(--light-bg);color:var(--text)}h1,h2,h3{font-family:'Playfair Display',Georgia,serif;color:var(--dark)}.hero-section{min-height:90vh;background:linear-gradient(135deg,var(--light-bg) 0%,var(--cream) 100%)}.loading-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--light-bg);display:flex;justify-content:center;align-items:center;z-index:9999;transition:opacity .3s ease-out}.coffee-loader{width:60px;height:60px;position:relative}.coffee-loader::before{content:'☕';font-size:50px;position:absolute;animation:steam 2s infinite}@keyframes steam{0%,100%{transform:translateY(0) rotate(0deg);opacity:1}50%{transform:translateY(-10px) rotate(5deg);opacity:0.8}}
     </style>
-    
-    <!-- Main styles - preload for faster loading -->
-    <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="styles.css"></noscript>
-    
-    <!-- Non-critical CSS - Load asynchronously -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet"></noscript>
     
     <!-- Schema.org JSON-LD structured data -->
     <script type="application/ld+json">
@@ -767,38 +765,26 @@
         </div>
     </footer>
 
-    <!-- Performance optimizations -->
+    <!-- Optimized JavaScript -->
     <script>
-        // Load non-critical CSS asynchronously
-        const loadCSS = (href) => {
-            const link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = href;
-            link.media = 'print';
-            link.onload = function() { this.media = 'all'; };
-            document.head.appendChild(link);
-        };
-        
-        // Load after DOM content loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                loadCSS('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
-                loadCSS('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
-            }, 50);
-        });
+        // Performance monitoring
+        if ('performance' in window) {
+            window.addEventListener('load', () => {
+                const perfData = performance.getEntriesByType('navigation')[0];
+                console.log('Page Load Time:', perfData.loadEventEnd - perfData.fetchStart, 'ms');
+            });
+        }
     </script>
     
     <!-- Enhanced JavaScript -->
     <script>
-        // Loading screen - optimized
-        document.addEventListener('DOMContentLoaded', function() {
+        // Loading screen - instant
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('loader');
+            loader.style.opacity = '0';
             setTimeout(() => {
-                const loader = document.getElementById('loader');
-                loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                }, 300);
-            }, 200);
+                loader.style.display = 'none';
+            }, 300);
         });
 
         // Header scroll effect
